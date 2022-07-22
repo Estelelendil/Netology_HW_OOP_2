@@ -18,8 +18,28 @@ class Character {
         throw new Error('Тип персонажа введен неверно');
       }
     }
+
+    levelUp() {
+      if (this.health > 0) {
+        this.level += 1;
+        this.attack *= 1.2;
+        this.defence *= 1.2;
+        this.health = 100;
+        return this;
+      }
+      throw new Error('Sorry, ничего не полчится, Вы мертвы');
+    }
+
+    demage(points) {
+      if (this.health > 0) {
+        this.health -= points * (1 - this.defence / 100);
+        return this;
+      }
+      throw new Error('Sorry, ничего не полчится, Вы мертвы');
+    }
 }
 
+export default Character;
 export class Bowman extends Character {
   constructor(name) {
     super(name, 'Bowman');
@@ -67,3 +87,7 @@ export class Daemon extends Character {
     this.defence = 40;
   }
 }
+
+const pers = new Daemon('Larry');
+pers.levelUp();
+console.log(pers);
